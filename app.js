@@ -3,7 +3,7 @@ const app = express();
 const database = require("./lib/dbAPI");
 const cors = require("cors");
 const port = 3010;
-const binURL = "http://97dc-2600-1702-3740-4b60-2411-e825-f0d6-576f.ngrok.io";
+const binURL = "http://binme.jtwgus.com";
 
 app.use(cors());
 app.use(express.static("public"));
