@@ -6,7 +6,7 @@ const port = 3010;
 const binURL = "http://binme.jtwgus.com";
 
 app.use(cors());
-app.use(express.static("public"));
+app.use(express.static(`${__dirname}/ui-react/build`));
 app.use(express.json());
 
 const getRandomString = () => {
