@@ -3,10 +3,11 @@ const app = express();
 const database = require("./lib/dbAPI");
 const cors = require("cors");
 const port = 3010;
-const binURL = "http://binme.jtwgus.com";
 
 app.use(cors());
-app.use(express.static(`${__dirname}/ui-react/build`));
+// app.use(express.static(`${__dirname}/ui-react/build`));
+app.use(express.static("public"));
+
 app.use(express.json());
 
 const getRandomString = () => {
@@ -17,6 +18,7 @@ const getRandomString = () => {
 };
 
 app.get("/create", async (req, res, next) => {
+  console.log("creating");
   let newString = getRandomString();
   try {
     let newBinUrl = `${binURL}/${newString}`;
@@ -29,19 +31,19 @@ app.get("/create", async (req, res, next) => {
 });
 
 app.get("/inspect/:binId", async (req, res, next) => {
+  console.log("inspecting");
   let bin = req.params.binId;
-
   let requestList = await database.getBinRequests(bin);
   res.json(requestList);
 });
 
-app.all("/:binID", async (req, res, next) => {
+app.all("/bins/:binID", async (req, res, next) => {
   // add request to proper bin in DB
+  console.log("trying");
   let bin = req.params.binID;
   let date = new Date();
-  await database
-    .addRequest(bin, req.body, req.method, req.headers, date)
-    .catch((error) => res.send(error));
+  await database.addRequest(bin, req.body, req.method, req.headers, date);
+  // .catch((error) => res.send(error));
   res.sendStatus(200);
 });
 
