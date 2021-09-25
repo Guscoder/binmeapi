@@ -20,14 +20,11 @@ const getRandomString = () => {
 app.get("/create", async (req, res, next) => {
   console.log("creating");
   let newString = getRandomString();
-  try {
-    let newBinUrl = `${binURL}/${newString}`;
-    let currentDate = new Date();
-    await database.createBin(newString, currentDate, false);
-    res.status(200).send(newString);
-  } catch {
-    res.status(304).send(error);
-  }
+  let currentDate = new Date();
+  await database.createBin(newString, currentDate, false).catch((error) => {
+    console.log(error);
+  });
+  res.status(200).send(newString);
 });
 
 app.get("/inspect/:binId", async (req, res, next) => {
