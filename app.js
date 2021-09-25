@@ -5,8 +5,8 @@ const cors = require("cors");
 const port = 3010;
 
 app.use(cors());
-// app.use(express.static(`${__dirname}/ui-react/build`));
-app.use(express.static("public"));
+app.use(express.static(`${__dirname}/ui-react/build`));
+// app.use(express.static("public"));
 
 app.use(express.json());
 
