@@ -33,7 +33,7 @@ app.get("/create", async (req, res, next) => {
   if (result) {
     res.send(newString);
   } else {
-    res.sendStatus(304);
+    res.send(result);
   }
 });
 
