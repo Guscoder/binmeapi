@@ -21,10 +21,20 @@ app.get("/create", async (req, res, next) => {
   console.log("creating");
   let newString = getRandomString();
   let currentDate = new Date();
-  await database.createBin(newString, currentDate, false).catch((error) => {
-    console.log(error);
-  });
-  res.status(200).send(newString);
+  // await database.createBin(newString, currentDate, false).catch((error) => {
+  //   console.log(error);
+  // });
+  let result = await database
+    .createBin(newString, currentDate, false)
+    .catch((error) => {
+      console.log(error);
+    });
+  console.log(result);
+  if (result) {
+    res.send(newString);
+  } else {
+    res.sendStatus(304);
+  }
 });
 
 app.get("/inspect/:binId", async (req, res, next) => {
